@@ -1,0 +1,6 @@
+install.packages(“bookdown”)
+install.packages("tinytex")
+install.packages("kableExtra")
+
+install.packages("ggplot2")
+install.packages("dplyr")
