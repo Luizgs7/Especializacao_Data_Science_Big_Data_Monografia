@@ -1,0 +1,18 @@
+dataset;framework;paid_free;roc_auc
+kc1;aws autopilot;Private;0,817
+kc1;gcp auto ml;Private;0,99
+kc1;dataiku;Private;0,811
+adult;dataiku;Private;0,932
+adult;aws autopilot;Private;0,929
+adult;gcp auto ml;Private;0,954
+blood_transfusion;aws autopilot;Private;0,806
+blood_transfusion;dataiku;Private;0,751
+kc1;pycaret;Open Source;0,767
+kc1;autosklearn;Open Source;0,718
+kc1;h2o;Open Source;0,633
+adult;pycaret;Open Source;0,693
+adult;autosklearn;Open Source;0,611
+adult;h2o;Open Source;0,324
+blood_transfusion;pycaret;Open Source;0,614
+blood_transfusion;autosklearn;Open Source;0,274
+blood_transfusion;h2o;Open Source;0,44

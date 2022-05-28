@@ -1,13 +1,13 @@
 ---
-title: "Comparative analysis of machine learning libraries"
+title: "Automated Machine Learning for classification problems: Comparative analysis of private and open-source solutions"
 
 authors_dict:
   - {name: Luiz Gabriel de Souza,
      index: 1,
-     role: "Aluno do programa de Especialização em Data Science & Big Data, [aluno@dsbd.leg.ufpr.br](aluno@dsbd.leg.ufpr.br)."}
+     role: "Aluno do programa de Especialização em Data Science & Big Data, [luiz.gabriel.souza@hotmail.com](luiz.gabriel.souza@hotmail.com)."}
   - {name: Ph.D. Luiz Eduardo S. Oliveira,
      index: 2,
-     role: "Professor do Departamento de Estatística - DEST/UFPR, [orientador@dsbd.leg.ufpr.br](orientador@dsbd.leg.ufpr.br)."}
+     role: "Professor do Departamento de Estatística - DEST/UFPR, [luiz.oliveira@ufpr.br](luiz.oliveira@ufpr.br)."}
   - {name: Outro Orientador do Programa,
      index: 3,
      role: "Professor do Departamento de Informática - DINF/UFPR.",}
@@ -27,12 +27,14 @@ output:
     pandoc_args: ["--natbib"]
     
 resumo: >
-  \textit{Lorem Ipsum} is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-palavras_chave: "Lorem, Ipsum, Lorem, Ipsum, Lorem"
+  O crescente uso de soluções baseadas em machine learning para resolução de problemas complexos em diversas áreas de aplicação, tem demandado soluções de aprendizado de máquina versáteis e de fácil utilização, que não demandem muitas habilidades técnincas para a sua execução. A partir de meados da década passado, começaram a surgir soluções voltadas para esse objetivo, denominadas \textit{Automated Machine Learning} (AutoML), com iniciativas da comunidade de desevolvimento de códigos abertos e de grandes empresas privadas. Com base nessa realidade, diversos projetos tem buscado comparar a performance de \textit{frameworks} de AutoML, testando diferentes bases de dados, arquiteturas e parametrizações aceitas por cada \textit{framework} Este projeto tem como objetivo comparar a performance de seis \textit{frameworks} de AutoML escolhidos, sendo três deles pagos (Google Auto Machine Learning, Amazon Web Services Autopilot e Dataiku) e três de código aberto (Pycaret, MLJar e H20), para modelos de classificação binários, visando entender se há diferenças consideráveis entre a parformance dos \textit{frameworks} pagos e gratuitos de AutoML. O projeto fez uso de 10 bases de dados públicas, que foram processadas com o menor ajuste possíveis de parametrização permitidos por cada framework \textit{frameworks}, buscando emular o uso de usuários com pouca ou nenhuma experiência em machine learning. 
+  ADICIONAR CONCLUSÔES
+palavras_chave: "Automate Machine Learning, AutoML, Pycaret, GCP, Autopilot"
 
 abstract: >
-  \textit{Lorem Ipsum} is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-keywords: "Lorem, Ipsum, Lorem, Ipsum, Lorem"
+  The growing use of suitable solutions in machine learning to solve complex problems in several areas, has demanded versatile machine learning solutions, which do not require many technical skills for their execution. From the entire decade, solutions began to emerge from the community of automated objectives, called Machine Learning (AutoML), with open source and large market initiatives. Based on this reality, several projects have sought to compare the performance of AutoML frameworks, testing different databases, architectures and parameterizations accepted by each framework. This project aims to compare the performance of six chosen AutoML frameworks, three of which are paid (Google Auto Machine Learning, Amazon Web Services Autopilot and Dataiku) and three are open source (Pycaret, MLJar and H20), for binary classification models. , understand if there are considerable differences between the performance of the paid and free AutoML frameworks. The project made use of 10 public databases, which were processed with the least possible parameterization allowed by each framework frameworks, seeking to emulate the use of adjustments from users with little or no experience in machine learning.
+  ADICIONAR CONCLUSÔES
+keywords: "Automate Machine Learning, AutoML, Pycaret, GCP, Autopilot"
 ---
 
 ```{r setup, include=FALSE}
@@ -42,61 +44,153 @@ options(knitr.table.format = "latex")
 
 library(ggplot2)
 library(dplyr)
+library(readr)
 library(kableExtra)
 ```
 
 # Introdução
 
-\textit{Lorem Ipsum} is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker. \cite{wickham2016r} aqui
+## Crescimento do uso de Machine Learning 
 
-# Materiais e métodos
+As últimas décadas marcaram o crescimento do uso de soluções de machine learning(ML) por grandes empresas e governos no mundo todo. Foram criadas soluções robustas para resolver problemas de visão computacional, reconhecimento de fala, jogos, classificação de elementos, agrupamentos, entre outras. É possível encontrar aplicações de ML na indústria com máquinas interconectadas que prevem problemas de produção; em hospitais auxiliando no diagnósticos de paciêntes; nas escolas e universidades personalizando o ensino de estudos; no marketing das empresas, personalizando e maximizando os resultados de campanhas de comunicações; etc.
 
-Escreva aqui.
+Com essa popularização, o interesse de profissionais que buscam os benefícios dessa tecnologia também cresceu, fazendo com que a presença e o valor de soluções que exijam pouco ou nenhum conhecimento prévio sobre machine learning tenha se expandido. Empresas privadas e a comunidade de desenvolvedores de código aberto passou a criar soluções que automatizam o processo de experimentação que é feita normalmente por experiêntes profissionais das áreas de estatística e matemática. Grandes empresas de tecnologia como Amazon e Google, por exemplo, criaram soluções deste caráter, onde com poucos cliques em uma plataforma de cloud interativa, é possível treinar modelos complexos e extrair resultados que podem ser utilizados imediatamente, sem a necessidades de configuração prévia de todo o fluxo tradicional de construção de um modelo de ML. Ao mesmo tempo, iniciativas de código aberto criaram ferramentas como Pycaret \cite{PyCaret} e MLJar \cite{mljar}, que apesar de não terem interface interativa como as citadas pelas empresas privadas acima, conseguem entregar soluções complexas e realizar diversos tipos de experimentos e transformação de dados com poucas linhas de código, de maneira intuitiva e rápida, sendo acessível para novos usuários interessados em modelos de ML e garantindo boa performance.
 
-```{r nomedatabela}
-df_tabela = head(iris) # seleciona as 5 primeiras linhas do dataset iris
-df_tabela = df_tabela[,1:3] # seleciona as 3 primeiras colunas
-df_tabela %>%
-  kable(booktabs=T, caption="Legenda da tabela")
+Além de atendar aos interesses de profissionais com pouca experiência no desenvolvimento de soluções de ML, \textit{frameworks} de AutoML podem contribuir facilidando o dia a dia de profissionais experientes, automatizando processos de experimentação e otimização de parâmetros, economizando tempo e aumentando a produtividade dos especialistas na área:
+\textit{"Put simply, AutoML can lead to improved performance while saving substantial amounts of time and money, as machine learning experts are both hard to find and expensive. As a result, commercial interest in AutoML has grown dramatically in recent years, and several major tech companies are now developing their own AutoML systems."} \cite{HutterLars2020}
+
+
+<!--
+## Automated Machine Learning 
+
+É possível resumir o processo de criação de uma solução de machine learning em fluxo como abaixo:
+
+* Selecionar o algoritmo;
+* Pre-processamento dos dados;
+* Treinamento do modelo;
+* Tunar os hiperparametros do modelo;
+* Avaliar performance dos resultados;
+* Explicar resultados do modelo.
+
+Cada parte do processo é importante para que o resultado final seja confiável e gerem os resultados esperados. No entanto, em cada etapa existe uma ampla gama de experimentos e testes que podem ser realizadas, fazendo necessário a experiência de profissionais super qualificados para tomar decisões e conduzir tais experimento. Por isso, os frameworks de Auto ML se apresentem como alternativa para automatizar tais experimentos. No entanto, não existe uma determinação clara do que eu framework de Auto ML precisa ter para de fato ser considerado um. Alguns framework possuem estrutura para realizar todos os pontos do fluxo apresentado acima, outros não. Para este projeto, buscamos escolher framework que façam, em maior ou menor grau, todos os pontos. 
+-->
+
+
+<!-- * Aumento de trabalhos referente ao tema (citar o livro) -->
+<!-- * existem frames para redes neurais tbm (citar quais), mas não é o foco deste projeto -->
+
+
+<!-- * Citar problemas que frames de automl enfreantm (tentam solucionar) : CASH, etc -->
+<!-- * engenharia de features, seleção de modelos e optimização de hiper-parâmetros. -->
+
+<!-- Métricas de Performance: AUC , a mesma utilizada pelo AutoML Benchmark-->
+
+## Objetivo do projeto
+
+Com base no crescimento do uso de soluções de AutoML, tanto privadas quanto abertas, este projeto tem como objetivo comparar a performance de \textit{frameworks} de AutoML para problemas de classificação binários. Não serão realizados nenhum tipo de pré processamento ou engenharia de caracteríticas dos dados, visando testar as funcionalidades em cada \textit{framework}. Além disso, tentaremos emular o uso dos frameworks por usuários com pouca experiência em ML, fazendo uso do maior uso de parâmetros padrão de cada \textit{framework}
+
+# Dados
+
+A fim de a garantir comparabilidade entre os resultados dos testes e ao mesmo tempo considerar as dificuldades de se lidar com dados categóricos e numéricos, selecionamos dez \textit{datasets} disponibilizadas pelo projeto aberto OpenML \cite{openml}, utilizadas para a criação do AutoML Benchmark Framework \cite{amlb2019}, idealizado pelo mesmo. Na documentação do projeto \cite{amlb2019}, a escolha dos \textit{datasets} foi descrita como: \textit{"The benchmark aims to consist of datasets that represent real-world data science problems. This means we want to include datasets of all sizes (including big ones), of different problem domains and with various levels of difficulty"}.
+
+Dentre todas os \textit{datasets} disponíveis, foram escolhidos os que possuiam diferentes volumes de atributos e instancias entre si, bem como diferentes tipos de dados como apenas categóricos, apenas numérico e numéricos e categóricos ao mesmo tempo. O nome e algumas características dos \textit{datasets} escolhidos pode ser observado abaixo:
+
+```{r table_datasets, fig.cap='Legenda do gráfico', out.width="100%"}
+setwd("..")
+
+data_sets <- read.csv(".\\data\\00_data_set_names.csv", sep=";")
+data_sets %>%
+  kable(booktabs=T, caption="Data-sets selecionados")
 ```
 
-Conforme demonstrado na tabela \@ref(tab:nomedatabela).
+Todos os \textit{datasets} podem ser encontrado neste [link]("https://www.openml.org/search?type=data&status=active")
 
-## Método 1
 
-Escreva aqui.
+# Experimentos
 
-```{=tex}
-\begin{equation}
-\log L = \sum_{i=1}^{n} \big[Y_i\ln(\pi_i) + (1-Y_i)\ln(1-\pi_i)\big]\text{.}(\#eq:nomedaequacao)
-\end{equation}
-```
-A equação \@ref(eq:nomedaequacao) blablablá.
+Foram testados seis \textit{frameworks} de autoML, três deles privados e outros três de código aberto. Entre os privados, foram testados o Google Cloud AutoML (GCP AutoML) GCPAutoML, Amazon AutoPilot (AWS AutoPilot) \cite{AWSAutopilot} e Dataiku \cite{Dataiku}. Entre os de código aberto, foram testados PyCaret \cite{PyCaret}, MLJar \cite{mljar} e H2O \cite{H2OAutoML20}. 
 
-## Método 2
+Para garantir a comparabilidade dos experimentos, algumas premissas foram tomadas em conta para todos os modelos processados:
 
-Escreva aqui.
+* Tempo de Processamento:
+Limitado a 60 minutos o tempo de processamento para o treino de cada \textit{datasets} em cada \textit{framework}.
 
-```{r nomedografico, fig.cap='Legenda do gráfico', out.width="100%", fig.align='center'}
-data(iris)
-iris %>%
-  ggplot(aes(x=Sepal.Length, y=Petal.Length, color=Species)) +
-  geom_point(alpha=0.6, size=3) +
-  theme(legend.position="bottom")
-```
+* Ambiente de Processamento:
+Para os \textit{frameworks} privados, foram utilizados seus respectivos ambientes de processamento em nuvem sem personalização. Para os de código aberto, utilizamos a plataforma Google Colab com suas configuações padrões do pacote gratúito. Os scripts podem ser acessados no [link]("https://www.openml.org/search?type=data&status=active")
 
-blã
 
-Conforme demonstrado na figura \@ref(fig:nomedografico).
+* Métrica para otimizar:
+Quando permitido pelo \textit{frameworks}, optamos por otimizar os experimentos para a métrica **ROC-AUC**, escolhida como medida de comparação entre os resultados obtidos de cada framework - a mesma utilizada pelo projeto \cite{amlb2019} para problema de classificação binária.
 
-### Experimento A
+* Paramêtros opcionais:
+Optamos por utilizar a maior quantidade de parâmetros padrãos de cada framework, ou seja, sem utilizar parâmetros como balanceamento automático de variáveis, quantidade de modelos para treino, etc. Adicionamos, quando aplicável, a semente aleatória igual a 123, buscando reproducibilidade dos experimentos.
 
-Escreva aqui.
+* Outras limitações intencionais:
+Foram desconsirados resultados de modelos \textit{Ensembles} e Redes Neurais.
+
+
+## \textit{Frameworks} Privados
+
+Com o aumento da popularidade de soluções em cloud, que geralmente são pagas, as empresas investiram também em soluções de machine learning pré prontas para uso, como é o caso do Google Cloud Plataform (GCP), Amazon Web Services (AWS) e a Dataiko. Abaixo alguns comentário sobre nossa experiência de usuário sobre cada uma delas: 
+
+* \textit{AWS Sagemaker AutoPilot}
+
+<!-- Necessidade da criação de um bucket para salvar o dataset e para os resultados do modelo -->
+<!-- Funcionalidade se encontra dentro do JupyterLab, com interface gráfica intuitiva e de fácil uso.  -->
+<!-- Faz a feature enginnering automáticamente -->
+<!-- Basta escolher a coluna alvo -->
+<!-- Gera notebooks para cada etapa de processamento: -->
+
+<!-- Pré processamento -->
+<!-- Cadidate Definitions Generated -->
+<!-- Feature Engineering -->
+<!-- Model Tuning -->
+<!-- Explanability report -->
+<!-- Insight report generated -->
+
+<!-- É possível configurar: -->
+
+
+* Google Cloud Plattaform Auto Machine Learning
+
+<!-- Explicar como funciona, detalhar a facilidade da ferramenta  -->
+
+* Dataiku
+Plataforma clara e intuitiva. Basta importar o \textit{dataset}
+
+## Gratuitos
+
+* Pycaret
+Se demonstrou uma biblioteca de fácil utilização, com muitos recursos ajustáveis e fácil acesso aos objetivos criados durante os testes como as bases transformadas, métricas, entre outros. , fazendo dela uma boa ferramenta tanto para  
+utilizada Sklearn como base, o que facilita demais, mas não se limita apenas a modelos existentes no Sklearn. Possui compatibilidade para a adição de outros modelos, inclusive Redes Neurais, e suporte para processamento com GPUs.
+
+* MLJar
+
+
+* H20 (Versão Gratúita)
+Possui arquitetura própria, sendo necessário a tranformação dos dados de treino para o formato exclusive da biblioteca. Além disso
 
 # Resultados e discussão
 
-Escreva aqui.
+No gráfico  \@ref(fig:resultados_auc) é possível visualizar os resultados comparatívos da métrica ROC-AUC apra cada um dos \textit{datasets} em cada \textit{frameworks}. Vemos que ...
+
+<!-- fig.cap='ROC-AUC Classificacao Binaria' -->
+```{r resultados_auc, out.width="100%", fig.align='center'}
+
+setwd("..")
+data_results <- read.csv(".\\data\\01_results.csv", sep=";")
+data_results %>%
+  mutate(roc_auc = as.double(gsub(",", ".", roc_auc))) %>%
+  ggplot(aes(x=roc_auc, y=dataset, color=paid_free)) + #framework
+  geom_point(alpha=0.6, size=3) +
+  theme_minimal()+
+  theme(legend.position="bottom")
+```
 
 # Conclusão
 
-Escreva aqui.
+Aqui
+
+Importante ressaltar que não os resultados para cada framework não passaram por testes posteriores para analisar a presença de overfitting ou qualquer outro problema de generalização que os resultados possam ter. 
+
+Como próximos passos acredito ser relevante estruturar uma maneira efetiva e comparável de coletar dados de custos de processamento em ambiente Cloud.
