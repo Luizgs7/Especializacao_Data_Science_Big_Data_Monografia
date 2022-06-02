@@ -1,18 +1,61 @@
 dataset;framework;paid_free;roc_auc
-kc1;aws autopilot;Private;0,817
-kc1;gcp auto ml;Private;0,99
-kc1;dataiku;Private;0,811
-adult;dataiku;Private;0,932
-adult;aws autopilot;Private;0,929
-adult;gcp auto ml;Private;0,954
-blood_transfusion;aws autopilot;Private;0,806
-blood_transfusion;dataiku;Private;0,751
-kc1;pycaret;Open Source;0,767
-kc1;autosklearn;Open Source;0,718
-kc1;h2o;Open Source;0,633
-adult;pycaret;Open Source;0,693
-adult;autosklearn;Open Source;0,611
-adult;h2o;Open Source;0,324
-blood_transfusion;pycaret;Open Source;0,614
-blood_transfusion;autosklearn;Open Source;0,274
-blood_transfusion;h2o;Open Source;0,44
+kc1;aws autopilot;Privado;0,817
+kc1;gcp auto ml;Privado;0,990
+kc1;dataiku;Privado;0,811
+adult;dataiku;Privado;0,932
+adult;aws autopilot;Privado;0,929
+adult;gcp auto ml;Privado;0,954
+blood_transfusion;aws autopilot;Privado;0,806
+blood_transfusion;gcp auto ml;Privado;
+blood_transfusion;dataiku;Privado;0,751
+nomao;aws autopilot;Privado;0,996
+nomao;gcp auto ml;Privado;0,996
+nomao;dataiku;Privado;0,996
+kr_vs_kp;aws autopilot;Privado;1,000
+kr_vs_kp;gcp auto ml;Privado;1,000
+kr_vs_kp;dataiku;Privado;1,000
+kdd;aws autopilot;Privado;0,799
+kdd;gcp auto ml;Privado;0,994
+kdd;dataiku;Privado;0,953
+bank_marketing;aws autopilot;Privado;0,938
+bank_marketing;gcp auto ml;Privado;0,975
+bank_marketing;dataiku;Privado;0,920
+amazon_emp;aws autopilot;Privado;0,859
+amazon_emp;gcp auto ml;Privado;0,983
+amazon_emp;dataiku;Privado;0,830
+jasmine;aws autopilot;Privado;0,873
+jasmine;gcp auto ml;Privado;0,892
+jasmine;dataiku;Privado;0,889
+higgs;aws autopilot;Privado;0,817
+higgs;gcp auto ml;Privado;0,814
+higgs;dataiku;Privado;0,800
+kc1;pycaret;Livre;0,500
+kc1;mljar;Livre;0,821
+kc1;h20;Livre;0,799
+adult;pycaret;Livre;0,927
+adult;mljar;Livre;0,930
+adult;h20;Livre;0,929
+blood_transfusion;pycaret;Livre;0,778
+blood_transfusion;mljar;Livre;0,810
+blood_transfusion;h20;Livre;0,735
+nomao;pycaret;Livre;0,995
+nomao;mljar;Livre;0,996
+nomao;h20;Livre;0,996
+kr_vs_kp;pycaret;Livre;0,999
+kr_vs_kp;mljar;Livre;1,000
+kr_vs_kp;h20;Livre;1,000
+kdd;pycaret;Livre;
+kdd;mljar;Livre;0,808
+kdd;h20;Livre;0,819
+bank_marketing;pycaret;Livre;0,929
+bank_marketing;mljar;Livre;0,936
+bank_marketing;h20;Livre;0,933
+amazon_emp;pycaret;Livre;0,651
+amazon_emp;mljar;Livre;0,839
+amazon_emp;h20;Livre;0,848
+jasmine;pycaret;Livre;0,860
+jasmine;mljar;Livre;0,891
+jasmine;h20;Livre;0,880
+higgs;pycaret;Livre;0,787
+higgs;mljar;Livre;0,727
+higgs;h20;Livre;0,805

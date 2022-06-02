@@ -40,26 +40,30 @@ keywords: "Automate Machine Learning, AutoML, Pycaret, GCP, Autopilot"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE)
 
-options(knitr.table.format = "latex")
+options(knitr.table.format = "latex", scipen = 999)
+
+TABLE_FONT_SIZE <- 8.5
+SEED <- 111
 
 library(ggplot2)
 library(dplyr)
 library(readr)
 library(kableExtra)
+
+theme_set(theme_bw())
 ```
 
 # Introdução
 
-## Crescimento do uso de Machine Learning 
+## Crescimento do uso de Machine Learning
 
 As últimas décadas marcaram o crescimento do uso de soluções de machine learning(ML) por grandes empresas e governos no mundo todo. Foram criadas soluções robustas para resolver problemas de visão computacional, reconhecimento de fala, jogos, classificação de elementos, agrupamentos, entre outras. É possível encontrar aplicações de ML na indústria com máquinas interconectadas que prevem problemas de produção; em hospitais auxiliando no diagnósticos de paciêntes; nas escolas e universidades personalizando o ensino de estudos; no marketing das empresas, personalizando e maximizando os resultados de campanhas de comunicações; etc.
 
 Com essa popularização, o interesse de profissionais que buscam os benefícios dessa tecnologia também cresceu, fazendo com que a presença e o valor de soluções que exijam pouco ou nenhum conhecimento prévio sobre machine learning tenha se expandido. Empresas privadas e a comunidade de desenvolvedores de código aberto passou a criar soluções que automatizam o processo de experimentação que é feita normalmente por experiêntes profissionais das áreas de estatística e matemática. Grandes empresas de tecnologia como Amazon e Google, por exemplo, criaram soluções deste caráter, onde com poucos cliques em uma plataforma de cloud interativa, é possível treinar modelos complexos e extrair resultados que podem ser utilizados imediatamente, sem a necessidades de configuração prévia de todo o fluxo tradicional de construção de um modelo de ML. Ao mesmo tempo, iniciativas de código aberto criaram ferramentas como Pycaret \cite{PyCaret} e MLJar \cite{mljar}, que apesar de não terem interface interativa como as citadas pelas empresas privadas acima, conseguem entregar soluções complexas e realizar diversos tipos de experimentos e transformação de dados com poucas linhas de código, de maneira intuitiva e rápida, sendo acessível para novos usuários interessados em modelos de ML e garantindo boa performance.
 
-Além de atendar aos interesses de profissionais com pouca experiência no desenvolvimento de soluções de ML, \textit{frameworks} de AutoML podem contribuir facilidando o dia a dia de profissionais experientes, automatizando processos de experimentação e otimização de parâmetros, economizando tempo e aumentando a produtividade dos especialistas na área:
-\textit{"Put simply, AutoML can lead to improved performance while saving substantial amounts of time and money, as machine learning experts are both hard to find and expensive. As a result, commercial interest in AutoML has grown dramatically in recent years, and several major tech companies are now developing their own AutoML systems."} \cite{HutterLars2020}
+Além de atendar aos interesses de profissionais com pouca experiência no desenvolvimento de soluções de ML, \textit{frameworks} de AutoML podem contribuir facilidando o dia a dia de profissionais experientes, automatizando processos de experimentação e otimização de parâmetros, economizando tempo e aumentando a produtividade dos especialistas na área: \textit{"Put simply, AutoML can lead to improved performance while saving substantial amounts of time and money, as machine learning experts are both hard to find and expensive. As a result, commercial interest in AutoML has grown dramatically in recent years, and several major tech companies are now developing their own AutoML systems."} \cite{HutterLars2020}
 
-
+```{=html}
 <!--
 ## Automated Machine Learning 
 
@@ -74,13 +78,13 @@ Além de atendar aos interesses de profissionais com pouca experiência no desen
 
 Cada parte do processo é importante para que o resultado final seja confiável e gerem os resultados esperados. No entanto, em cada etapa existe uma ampla gama de experimentos e testes que podem ser realizadas, fazendo necessário a experiência de profissionais super qualificados para tomar decisões e conduzir tais experimento. Por isso, os frameworks de Auto ML se apresentem como alternativa para automatizar tais experimentos. No entanto, não existe uma determinação clara do que eu framework de Auto ML precisa ter para de fato ser considerado um. Alguns framework possuem estrutura para realizar todos os pontos do fluxo apresentado acima, outros não. Para este projeto, buscamos escolher framework que façam, em maior ou menor grau, todos os pontos. 
 -->
-
-
+```
 <!-- * Aumento de trabalhos referente ao tema (citar o livro) -->
+
 <!-- * existem frames para redes neurais tbm (citar quais), mas não é o foco deste projeto -->
 
-
 <!-- * Citar problemas que frames de automl enfreantm (tentam solucionar) : CASH, etc -->
+
 <!-- * engenharia de features, seleção de modelos e optimização de hiper-parâmetros. -->
 
 <!-- Métricas de Performance: AUC , a mesma utilizada pelo AutoML Benchmark-->
@@ -100,89 +104,87 @@ setwd("..")
 
 data_sets <- read.csv(".\\data\\00_data_set_names.csv", sep=";")
 data_sets %>%
-  kable(booktabs=T, caption="Data-sets selecionados")
+  kable(booktabs=T, caption="Data-sets selecionados") %>%
+  kable_styling(font_size = TABLE_FONT_SIZE)
 ```
 
-Todos os \textit{datasets} podem ser encontrado neste [link]("https://www.openml.org/search?type=data&status=active")
-
+Todos os \textit{datasets} podem ser encontrado neste [link](%22https://www.openml.org/search?type=data&status=active%22)
 
 # Experimentos
 
-Foram testados seis \textit{frameworks} de autoML, três deles privados e outros três de código aberto. Entre os privados, foram testados o Google Cloud AutoML (GCP AutoML) GCPAutoML, Amazon AutoPilot (AWS AutoPilot) \cite{AWSAutopilot} e Dataiku \cite{Dataiku}. Entre os de código aberto, foram testados PyCaret \cite{PyCaret}, MLJar \cite{mljar} e H2O \cite{H2OAutoML20}. 
+Foram testados seis \textit{frameworks} de autoML, três deles privados e outros três de código aberto. Entre os privados, foram testados o Google Cloud AutoML (GCP AutoML) GCPAutoML, Amazon AutoPilot (AWS AutoPilot) \cite{AWSAutopilot} e Dataiku \cite{Dataiku}. Entre os de código aberto, foram testados PyCaret \cite{PyCaret}, MLJar \cite{mljar} e H2O \cite{H2OAutoML20}.
 
 Para garantir a comparabilidade dos experimentos, algumas premissas foram tomadas em conta para todos os modelos processados:
 
-* Tempo de Processamento:
-Limitado a 60 minutos o tempo de processamento para o treino de cada \textit{datasets} em cada \textit{framework}.
+-   **Tempo de Processamento:** Limitado a 60 minutos o tempo de processamento para o treino de cada \textit{datasets} em cada \textit{framework}.
 
-* Ambiente de Processamento:
-Para os \textit{frameworks} privados, foram utilizados seus respectivos ambientes de processamento em nuvem sem personalização. Para os de código aberto, utilizamos a plataforma Google Colab com suas configuações padrões do pacote gratúito. Os scripts podem ser acessados no [link]("https://www.openml.org/search?type=data&status=active")
+-   **Ambiente de Processamento:** Para os \textit{frameworks} privados, foram utilizados seus respectivos ambientes de processamento em nuvem sem personalização. Para os de código aberto, utilizamos a plataforma Google Colab com suas configuações padrões do pacote gratúito. Os scripts podem ser acessados [aqui](%22https://www.openml.org/search?type=data&status=active%22).
 
+-   **Métrica para otimizar:** Quando permitido pelo \textit{framework}, optamos por otimizar os experimentos para a métrica **ROC-AUC**, escolhida como medida de comparação entre os resultados obtidos de cada framework - a mesma utilizada pelo projeto \cite{amlb2019} para problema de classificação binária.
 
-* Métrica para otimizar:
-Quando permitido pelo \textit{frameworks}, optamos por otimizar os experimentos para a métrica **ROC-AUC**, escolhida como medida de comparação entre os resultados obtidos de cada framework - a mesma utilizada pelo projeto \cite{amlb2019} para problema de classificação binária.
+-   **Paramêtros opcionais:** Optamos por utilizar a maior quantidade de parâmetros padrãos de cada framework, ou seja, sem utilizar parâmetros como balanceamento automático de variáveis, quantidade de modelos para treino, etc. Adicionamos, quando aplicável, a semente aleatória igual a 123, buscando reproducibilidade dos experimentos.
 
-* Paramêtros opcionais:
-Optamos por utilizar a maior quantidade de parâmetros padrãos de cada framework, ou seja, sem utilizar parâmetros como balanceamento automático de variáveis, quantidade de modelos para treino, etc. Adicionamos, quando aplicável, a semente aleatória igual a 123, buscando reproducibilidade dos experimentos.
-
-* Outras limitações intencionais:
-Foram desconsirados resultados de modelos \textit{Ensembles} e Redes Neurais.
-
+-   **Outras limitações intencionais:** Foram desconsirados resultados de modelos \textit{Ensembles} e Redes Neurais, visto que nem todas os \textit{frameworks}possuem tais *features*.
 
 ## \textit{Frameworks} Privados
 
-Com o aumento da popularidade de soluções em cloud, que geralmente são pagas, as empresas investiram também em soluções de machine learning pré prontas para uso, como é o caso do Google Cloud Plataform (GCP), Amazon Web Services (AWS) e a Dataiko. Abaixo alguns comentário sobre nossa experiência de usuário sobre cada uma delas: 
+Com o aumento da popularidade de soluções em cloud, que geralmente são pagas, as empresas investiram também em soluções de machine learning pré prontas para uso, como é o caso do Google Cloud Plataform (GCP), Amazon Web Services (AWS) e a Dataiko. Abaixo alguns comentário sobre nossa experiência de usuário sobre cada uma delas:
 
-* \textit{AWS Sagemaker AutoPilot}
+-   **AWS Sagemaker AutoPilot**
 
 <!-- Necessidade da criação de um bucket para salvar o dataset e para os resultados do modelo -->
+
 <!-- Funcionalidade se encontra dentro do JupyterLab, com interface gráfica intuitiva e de fácil uso.  -->
+
 <!-- Faz a feature enginnering automáticamente -->
+
 <!-- Basta escolher a coluna alvo -->
+
 <!-- Gera notebooks para cada etapa de processamento: -->
 
 <!-- Pré processamento -->
+
 <!-- Cadidate Definitions Generated -->
+
 <!-- Feature Engineering -->
+
 <!-- Model Tuning -->
+
 <!-- Explanability report -->
+
 <!-- Insight report generated -->
 
 <!-- É possível configurar: -->
 
-
-* Google Cloud Plattaform Auto Machine Learning
+-   **Google Cloud Plattaform Auto Machine Learning**
 
 <!-- Explicar como funciona, detalhar a facilidade da ferramenta  -->
 
-* Dataiku
-Plataforma clara e intuitiva. Basta importar o \textit{dataset}
+-   **Dataiku** Plataforma clara e intuitiva. Basta importar o \textit{dataset}
 
-## Gratuitos
+## \textit{Frameworks} Gratuitos
 
-* Pycaret
-Se demonstrou uma biblioteca de fácil utilização, com muitos recursos ajustáveis e fácil acesso aos objetivos criados durante os testes como as bases transformadas, métricas, entre outros. , fazendo dela uma boa ferramenta tanto para  
-utilizada Sklearn como base, o que facilita demais, mas não se limita apenas a modelos existentes no Sklearn. Possui compatibilidade para a adição de outros modelos, inclusive Redes Neurais, e suporte para processamento com GPUs.
+-   **Pycaret** Se demonstrou uma biblioteca de fácil utilização, com muitos recursos ajustáveis e fácil acesso aos objetivos criados durante os testes como as bases transformadas, métricas, entre outros. , fazendo dela uma boa ferramenta tanto para\
+    utilizada Sklearn como base, o que facilita demais, mas não se limita apenas a modelos existentes no Sklearn. Possui compatibilidade para a adição de outros modelos, inclusive Redes Neurais, e suporte para processamento com GPUs.
 
-* MLJar
+-   **MLJar**
 
-
-* H20 (Versão Gratúita)
-Possui arquitetura própria, sendo necessário a tranformação dos dados de treino para o formato exclusive da biblioteca. Além disso
+-   **H20 (Versão Gratúita)** Possui arquitetura própria, sendo necessário a tranformação dos dados de treino para o formato exclusive da biblioteca. Além disso
 
 # Resultados e discussão
 
-No gráfico  \@ref(fig:resultados_auc) é possível visualizar os resultados comparatívos da métrica ROC-AUC apra cada um dos \textit{datasets} em cada \textit{frameworks}. Vemos que ...
+No gráfico \@ref(fig:resultados_auc) é possível visualizar os resultados comparatívos da métrica ROC-AUC apra cada um dos \textit{datasets} em cada \textit{frameworks}. Vemos que ...
 
 <!-- fig.cap='ROC-AUC Classificacao Binaria' -->
+
 ```{r resultados_auc, out.width="100%", fig.align='center'}
 
 setwd("..")
 data_results <- read.csv(".\\data\\01_results.csv", sep=";")
 data_results %>%
   mutate(roc_auc = as.double(gsub(",", ".", roc_auc))) %>%
-  ggplot(aes(x=roc_auc, y=dataset, color=paid_free)) + #framework
-  geom_point(alpha=0.6, size=3) +
+  ggplot(aes(x=dataset, y=roc_auc, color=framework, shape=paid_free)) + #framework
+  geom_jitter(alpha=0.6, size=3, width = 0.25) +
   theme_minimal()+
   theme(legend.position="bottom")
 ```
@@ -191,6 +193,6 @@ data_results %>%
 
 Aqui
 
-Importante ressaltar que não os resultados para cada framework não passaram por testes posteriores para analisar a presença de overfitting ou qualquer outro problema de generalização que os resultados possam ter. 
+Importante ressaltar que não os resultados para cada framework não passaram por testes posteriores para analisar a presença de overfitting ou qualquer outro problema de generalização que os resultados possam ter.
 
 Como próximos passos acredito ser relevante estruturar uma maneira efetiva e comparável de coletar dados de custos de processamento em ambiente Cloud.
