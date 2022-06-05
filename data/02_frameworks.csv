@@ -1,0 +1,11 @@
+Framework;aws autopilot;gcp auto ml;dataiku;pycaret;mljar;h20
+Pago ou Livre?;Pago;Pago;Pago;Livre;Livre;Livre
+Realiza transformação de dados;S;S;S;S;S;N
+Precisa de dados balanceados;N;N;N;N;N;N
+Seleciona tarefa automaticamente (Reg vs Clas);S;N;N;N;S;N
+Permite escolher tempo de processamento;S;S;N;S;S;S
+Experimentos reprodutiveis;N;N;N;S;S;S
+Produz Ensembles;N;-;N;S;S;S
+Produz Redes Neurais;N;-;S;N*;S;S
+Forks;-;-;-;1300;271;1900
+Versão;-;-;-;2.3.10;0.11.2;3.36.1.1

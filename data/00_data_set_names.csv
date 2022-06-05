@@ -1,11 +1,11 @@
-Nome;Atributos;Instancias;Tipo de Atributos;tx_null_values
-KDDCup09_appetency;231;50.000;Mix;69,47%
+Nome;Atributos;Instancias;Tipo_Atributos;tx_null_values
+kdd;231;50.000;Mix;69,47%
 jasmine;145;2.984;Mix;0,00%
 nomao;119;34.465;Mix;0,00%
-kr-vs-kp;37;3.196;Categórico;0,00%
+kr_vs_kp;37;3.196;Categórico;0,00%
 higgs;29;98.050;Numérico;0,00%
 kc1;22;2.109;Numérico;0,00%
-bank-marketing;17;45.211;Mix;0,00%
+bank_marketing;17;45.211;Mix;0,00%
 adult;15;48.842;Mix;0,88%
-Amazon_employee_access;10;32.769;Categórico;0,00%
-blood-transfusion;5;748;Numérico;0,00%
+amazon_emp;10;32.769;Categórico;0,00%
+blood_transfusion;5;748;Numérico;0,00%
