@@ -1,0 +1,129 @@
+---
+title: "Aprendizado de Máquina Automático (AutoML) para problemas de classificação: Análise comparativa do desempenho de frameworks privados e públicos"
+short-title: "Monografia DSBD 2022"
+author: "Luiz Gabriel de Souza"
+advisor: "Ph.D. Luiz Eduardo S. Oliveira"
+affiliation: "Universidade Federal do Paraná"
+sector: "Setor de Ciências Exatas"
+department: "Departamento de Estatística"
+program: "Programa de Especialização em Data Science e Big Data"
+email: "luiz.gabriel.souza@hotmail.com"
+short-author: "Luiz G Souza"
+date: "24 de Junho de 2022"
+short-date: "24/06/2022"
+output: 
+  bookdown::beamer_presentation2:
+    template: beamer_template.tex
+    slide_level: 2
+    keep_tex: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.align="center")
+```
+
+# Introdução
+
+# Automated Machine Learning
+
+-   "Auto ML fornece métodos e processos para disponibilizar o Aprendizado de Máquina para não especialistas em Aprendizado de Máquina, para melhorar a eficiência do Aprendizado de Máquina e acelerar a pesquisa sobre Aprendizado de Máquina."
+
+-   É capaz de:
+
+    -   Pré-processamento e limpeza dos dados;
+
+    -   Selecionar e construir vetores de características;
+
+    -   Selecionar uma família de modelos apropriados para o problema;
+
+    -   Otimizae hiperparâmetros do modelo;
+
+    -   Construir a topologia de redes neurais (se o usado);
+
+    -   Analisar criticamente os resultados obtidos.
+
+# Literatura
+
+-   Citar o bench da OpenML
+
+# Objetivo do Projeto
+
+-   O objetivo do projeto é comparar as características e a performance de frameworks de Auto ML privado e públicos.
+
+```{=html}
+<!-- -->
+```
+-   Os frameworks escolhidos foram:
+
+::: {.columns}
+::: {.column}
+```{r, out.width='25%'}
+knitr::include_graphics('img/aws_logo.png')
+```
+
+```{r, out.width='25%'}
+knitr::include_graphics('img/google_logo.png')
+```
+
+```{r, out.width='25%'}
+knitr::include_graphics('img/dataiku_logo.png')
+```
+:::
+
+::: {.column}
+```{r, out.width='25%'}
+knitr::include_graphics('img/h2o_logo.jpeg')
+```
+
+```{r, out.width='25%'}
+knitr::include_graphics('img/pycaret_logo_2.png')
+```
+
+```{r, out.width='25%'}
+knitr::include_graphics('img/mljar_logo.png')
+```
+:::
+:::
+
+# Experimentos
+
+## Dados
+
+-   Escolhemos 10 datasets também utilizados pelo projeto de referência *OpenML Benchmark Framework.*
+
+-   Os datasets escolhidos possuem diferentes volumes de atributos e
+
+    instancias entre si, bem como diferentes tipos de dados
+
+    ```{r, out.width='80%'}
+    knitr::include_graphics('img/datasets.png')
+    ```
+
+## Premissas
+
+-   Citar todas as premissas (inclusive ROC-AUC como métrica)
+
+## Experiência de uso
+
+-   Citar principais características e aprendizados da experiência do usuário com cada framework
+
+# Resultados
+
+## Comparação ROC-AUC
+
+-   Adicionar gráfico aqui
+
+## Ranking
+
+-   explicar o sistema de pontos/ranking
+-   adicionar gráfico
+
+# Conclusões
+
+-   Conclusões
+
+\centering
+
+::: {style="font-size: 30px;"}
+Obrigado.
+:::
