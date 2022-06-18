@@ -50,9 +50,8 @@ knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.align="cen
 
 -   O objetivo do projeto é comparar as características e a performance de frameworks de Auto ML privado e públicos.
 
-```{=html}
 <!-- -->
-```
+
 -   Os frameworks escolhidos foram:
 
 ::: {.columns}
