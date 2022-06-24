@@ -1,5 +1,5 @@
 ---
-title: "Aprendizado de Máquina Automático (AutoML) para problemas de classificação: Análise comparativa do desempenho de frameworks privados e públicos"
+title: "Aprendizado de Máquina Automático (AutoML) para problemas de classificação: Análise comparativa do desempenho de frameworks privados e públicos."
 short-title: "Monografia DSBD 2022"
 author: "Luiz Gabriel de Souza"
 advisor: "Ph.D. Luiz Eduardo S. Oliveira"
@@ -9,8 +9,8 @@ department: "Departamento de Estatística"
 program: "Programa de Especialização em Data Science e Big Data"
 email: "luiz.gabriel.souza@hotmail.com"
 short-author: "Luiz G Souza"
-date: "24 de Junho de 2022"
-short-date: "24/06/2022"
+date: "25 de Junho de 2022"
+short-date: "25/06/2022"
 output: 
   bookdown::beamer_presentation2:
     template: beamer_template.tex
@@ -22,13 +22,11 @@ output:
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.align="center")
 ```
 
-# Introdução
-
 # Automated Machine Learning
 
--   "Auto ML fornece métodos e processos para disponibilizar o Aprendizado de Máquina para não especialistas em Aprendizado de Máquina, para melhorar a eficiência do Aprendizado de Máquina e acelerar a pesquisa sobre Aprendizado de Máquina."
+-   Auto ML fornece métodos e processos para disponibilizar o Aprendizado de Máquina para não especialistas na área, para melhorar a eficiência e acelerar o processo de experimentação de criação de modelos.
 
--   É capaz de:
+-   Frameworks de AutoML podem serem capazes de:
 
     -   Pré-processamento e limpeza dos dados;
 
@@ -36,26 +34,27 @@ knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, fig.align="cen
 
     -   Selecionar uma família de modelos apropriados para o problema;
 
-    -   Otimizae hiperparâmetros do modelo;
+    -   Otimizar hiperparâmetros do modelo;
 
-    -   Construir a topologia de redes neurais (se o usado);
+    -   Construir a topologia de redes neurais;
 
-    -   Analisar criticamente os resultados obtidos.
+    -   Analisar os resultados obtidos.
 
 # Literatura
 
--   Citar o bench da OpenML
+-   O projeto *AutoML Benchmark Framework* da Fundação Open Machine Learning (openml.org) serviu como base para parte da metodologia adotada nos experimentos, uma vez que o benchmark de AutoML é o mais robusto que encontramos na literatura;
+-   Não foram identificados artigos ou outros benchmarks robustos que analisem a performance de frameworks de AutoML privados.
 
 # Objetivo do Projeto
 
--   O objetivo do projeto é comparar as características e a performance de frameworks de Auto ML privado e públicos.
-
-<!-- -->
+-   O objetivo do projeto é comparar as características e a performance de frameworks de Auto ML privados e públicos;
 
 -   Os frameworks escolhidos foram:
 
-::: {.columns}
-::: {.column}
+::: columns
+::: column
+\center Privados
+
 ```{r, out.width='25%'}
 knitr::include_graphics('img/aws_logo.png')
 ```
@@ -69,7 +68,9 @@ knitr::include_graphics('img/dataiku_logo.png')
 ```
 :::
 
-::: {.column}
+::: column
+\center Públicos
+
 ```{r, out.width='25%'}
 knitr::include_graphics('img/h2o_logo.jpeg')
 ```
@@ -88,11 +89,9 @@ knitr::include_graphics('img/mljar_logo.png')
 
 ## Dados
 
--   Escolhemos 10 datasets também utilizados pelo projeto de referência *OpenML Benchmark Framework.*
+-   Foram escolhidos 10 datasets também utilizados pelo projeto de referência *OpenML Benchmark Framework;*
 
--   Os datasets escolhidos possuem diferentes volumes de atributos e
-
-    instancias entre si, bem como diferentes tipos de dados
+-   Os datasets escolhidos possuem diferentes volumes de atributos e instâncias entre si, bem como diferentes tipos de dados;
 
     ```{r, out.width='80%'}
     knitr::include_graphics('img/datasets.png')
@@ -100,29 +99,73 @@ knitr::include_graphics('img/mljar_logo.png')
 
 ## Premissas
 
--   Citar todas as premissas (inclusive ROC-AUC como métrica)
+-   Tempo de processamento: 1 hora;
+-   Ambiente de Processamento: Cloud para privados e Google Colab para públicos;
+-   Métrica de otimização: ROC-AUC;
+-   Parâmetros adicionais: Optamos por utilizar a maior quantidade possível de parâmetros padrão de cada ferramenta;
+-   Outras limitações: Quando possível, desconsideramos resultados de Redes Neurais e modelos Ensemble.
 
 ## Experiência de uso
 
--   Citar principais características e aprendizados da experiência do usuário com cada framework
+::: columns
+::: column
+\center Privados
+
+-   \small Interface interativa de fácil uso;
+-   \small Falta de clareza quanto aos custos durante processamento;
+-   \small AWS: Exporta os notebooks criados automaticamente pela ferramenta;
+-   \small Google: Não mostra metodologia, modelo utilizado ou qualquer tipo de informação sobre o processamento dos dados;
+-   \small Dataiku: O mais intuitivo e fácil de usar.
+:::
+
+::: column
+\center Públicos
+
+-   \small Necessidade de conhecimentos de código em python para uso;
+-   \small Dificuldades em processar datasets muito grandes por limitação de máquina;
+-   \small H2O: Necessidade de configuração próprias da biblioteca como a tranformação de DataFrames;
+-   \small MLJar: Exporta um HTML interativo com os resultados dos experimentos, incluindo gráficos para análise;
+-   \small Pycaret: O mais intuitivo e fácil de usar, pois, precisa de poucas linhas de código.
+:::
+:::
 
 # Resultados
 
 ## Comparação ROC-AUC
 
--   Adicionar gráfico aqui
+```{r, out.width='80%'}
+knitr::include_graphics('img/roc_auc.png')
+```
 
-## Ranking
+## Ranking por Framework
 
--   explicar o sistema de pontos/ranking
--   adicionar gráfico
+-   Para analisar a performance dos frameworks de forma agrupada, utilizamos o seguinte método:
+    -   Para cada dataset, criamos um ranking ordenado pela performance da métrica ROC-AUC de cada framework obtida por em cada framework, onde o melhor desempenho fica na posição 6 e o pior desempenho recebe a posição 1;
+
+    -   Dessa forma, o ranking passa a valer como uma espécie de pontuação com base no desempenho de cada framework, possibilitando a criação do seguintes gráficos:
+
+## Ranking por framework
+
+```{r, out.width='80%'}
+knitr::include_graphics('img/rank_framework.png')
+```
+
+## Ranking por tipo
+
+```{r, out.width='80%'}
+knitr::include_graphics('img/rank_tipo.png')
+```
 
 # Conclusões
 
--   Conclusões
+-   O framework Google obteve a melhor performance mas é uma "caixa preta" e não diz qual tipo de técnica utilizou para alcançar seus resultados;
+-   Comparando os demais frameworks, os públicos tiveram resultados muito competitivos quando comparados com os privados, com destaque para o MLJar que obteve restultados muito próximos aos da AWS Autopilot;
+-   Pycaret obteve a pior performance entre todos os frameworks analisados.
 
-\centering
+## Possíveis próximos passos
 
-::: {style="font-size: 30px;"}
-Obrigado.
-:::
+-   Coletar dados de custos financeiros das plataformas privadas;
+-   Utilizar todas as features de cada framework, incluindo Deep Learning;
+-   Estender a quantidade de datasets, incluindo problemas de classificação multi classse e regressão.
+
+# Obrigado!
