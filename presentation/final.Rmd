@@ -140,7 +140,7 @@ knitr::include_graphics('img/roc_auc.png')
 ## Ranking por Framework
 
 -   Para analisar a performance dos frameworks de forma agrupada, utilizamos o seguinte método:
-    -   Para cada dataset, criamos um ranking ordenado pela performance da métrica ROC-AUC de cada framework obtida por em cada framework, onde o melhor desempenho fica na posição 6 e o pior desempenho recebe a posição 1;
+    -   Para cada dataset, criamos um ranking ordenado pela performance da métrica ROC-AUC de cada framework, onde o melhor desempenho fica na posição 6 e o pior desempenho recebe a posição 1;
 
     -   Dessa forma, o ranking passa a valer como uma espécie de pontuação com base no desempenho de cada framework, possibilitando a criação do seguintes gráficos:
 
